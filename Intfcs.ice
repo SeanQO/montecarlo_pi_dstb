@@ -2,12 +2,14 @@ module intfc
 {
     interface Subject
     {
-        void attach(Worker worker);
-        void detach(Worker worker);
+        void attach(Object worker);
+        void detach(Object worker);
     }   
 
-    interface worker
+    sequence<long> resoults;
+
+    interface Worker
     {
-        sequence<long> resolveTask();
+        resoults resolveTask();
     }
 }
