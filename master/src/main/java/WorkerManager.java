@@ -38,11 +38,8 @@ public class WorkerManager implements Server{
 
 	@Override
 	public void attach(WorkerPrx workerprx, Current current) {
-		WorkerPrx w = getWorker(); 
-		if(w.callback()) {
 			this.workers.add((WorkerPrx) workerprx);	
-			System.out.println("Worker Online");
-		}
+			System.out.println("Worker Online");		
 		
 	}
 
