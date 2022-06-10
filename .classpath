@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="montecarlo/src/main/java/|worker/src/main/java/|master/src/main/java/" kind="src" path=""/>
+	<classpathentry kind="src" path="master/src/main/java"/>
+	<classpathentry kind="src" path="montecarlo/src/main/java"/>
+	<classpathentry kind="src" path="worker/src/main/java"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
