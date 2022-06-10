@@ -12,11 +12,11 @@ import intfc.WorkerPrx;
 public class WorkerManager implements Server{
 	
 	private Master controllerMaster;
-	private Queue<Slave> workers;
+	private Queue<WorkerPrx> workers;
 	
 	
-    public Slave getWorker() {
-    	Slave w;
+    public WorkerPrx getWorker() {
+    	WorkerPrx w;
     	
     	if(workers.isEmpty()) {
     		w =  null;
@@ -38,9 +38,9 @@ public class WorkerManager implements Server{
 
 	@Override
 	public void attach(WorkerPrx workerprx, Current current) {
-		Slave w = getWorker(); 
-		if(w.callback(current)) {
-			this.workers.add((Slave) workerprx);	
+		WorkerPrx w = getWorker(); 
+		if(w.callback()) {
+			this.workers.add((WorkerPrx) workerprx);	
 			System.out.println("Worker Online");
 		}
 		
@@ -48,9 +48,9 @@ public class WorkerManager implements Server{
 
 
 	@Override
-	public void detach(Value workerprx, Current current) {
-		Slave w = getWorker();
-		if(!w.callback(current)) {
+	public void detach(WorkerPrx workerprx, Current current) {
+		WorkerPrx w = getWorker();
+		if(!w.callback()) {
 			this.workers.remove(workerprx);
 			System.out.println("Worker Offline");
 		}

@@ -1,14 +1,14 @@
 import intfc.*;
 
 
-public class Main_Worker {
+public class Worker {
 	
-	Master m;
+	//Master m;
 
 	public static void main(String[] args) {
 		
 
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.client"))
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "worker.config"))
         {
             
 

@@ -3,7 +3,7 @@ public class MasterMain {
 
 	public static void main(String[] args) {
 		
-        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "config.server"))
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "master.config"))
         {
             
             Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));

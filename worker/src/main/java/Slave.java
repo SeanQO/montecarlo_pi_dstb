@@ -30,12 +30,6 @@ public class Slave implements Worker{
 		return rd.nextDouble();
 	}
 
-    //calculate random points
-    public long[] resolveTask(long n){
-    	
-
-    }
-
   //calculate random points
 	@Override
 	public long[] resolveTask(long l, Current current) {
@@ -58,7 +52,7 @@ public class Slave implements Worker{
         
         long[] inOut = {in, out};
         working = false;
-        callback(working, current);
+        callback(current);
         return inOut;
 	}
 
