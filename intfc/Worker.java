@@ -17,7 +17,7 @@ package intfc;
 
 public interface Worker extends com.zeroc.Ice.Object
 {
-    long[] resolveTask(com.zeroc.Ice.Current current);
+    long[] resolveTask(long l, com.zeroc.Ice.Current current);
 
     void callback(long[] r, com.zeroc.Ice.Current current);
 
@@ -55,8 +55,11 @@ public interface Worker extends com.zeroc.Ice.Object
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_resolveTask(Worker obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        inS.readEmptyParams();
-        long[] ret = obj.resolveTask(current);
+        com.zeroc.Ice.InputStream istr = inS.startReadParams();
+        long iceP_l;
+        iceP_l = istr.readLong();
+        inS.endReadParams();
+        long[] ret = obj.resolveTask(iceP_l, current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
         ostr.writeLongSeq(ret);
         inS.endWriteParams(ostr);

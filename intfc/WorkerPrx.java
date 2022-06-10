@@ -17,36 +17,39 @@ package intfc;
 
 public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default long[] resolveTask()
+    default long[] resolveTask(long l)
     {
-        return resolveTask(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return resolveTask(l, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default long[] resolveTask(java.util.Map<String, String> context)
+    default long[] resolveTask(long l, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(context, true).waitForResponse();
+        return _iceI_resolveTaskAsync(l, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync()
+    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l)
     {
-        return _iceI_resolveTaskAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_resolveTaskAsync(l, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(context, false);
+        return _iceI_resolveTaskAsync(l, context, false);
     }
 
     /**
      * @hidden
+     * @param iceP_l -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_resolveTaskAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_resolveTaskAsync(long iceP_l, java.util.Map<String, String> context, boolean sync)
     {
         com.zeroc.IceInternal.OutgoingAsync<long[]> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "resolveTask", null, sync, null);
-        f.invoke(true, context, null, null, istr -> {
+        f.invoke(true, context, null, ostr -> {
+                     ostr.writeLong(iceP_l);
+                 }, istr -> {
                      long[] ret;
                      ret = istr.readLongSeq();
                      return ret;

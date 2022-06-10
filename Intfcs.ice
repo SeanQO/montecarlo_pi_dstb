@@ -10,7 +10,7 @@ module intfc
 
     interface Worker
     {
-        resoults resolveTask(Long l);
+        resoults resolveTask(long l);
         void callback(resoults r);
     }
 }
