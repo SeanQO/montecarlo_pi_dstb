@@ -6,10 +6,10 @@ import com.zeroc.Ice.Current;
 import com.zeroc.Ice.Value;
 
 import intfc.Server;
-import intfc.Subject;
+
 import intfc.WorkerPrx;
 
-public class WorkerManager implements Subject, Server{
+public class WorkerManager implements Server{
 	
 	private Master controllerMaster;
 	private Queue<Slave> workers;
@@ -29,36 +29,37 @@ public class WorkerManager implements Subject, Server{
     	
     }
 
-
 	@Override
-	public void sendPoints(WorkerPrx proxy, long r, Current current) {
-		proxy.callback(r);
+	public void callCallBack(WorkerPrx proxy, Current current) {
+		// TODO Auto-generated method stub
+		
 	}
+
 
 	@Override
 	public void attach(WorkerPrx workerprx, Current current) {
-		
 		Slave w = getWorker(); 
 		if(w.callback(current)) {
 			this.workers.add((Slave) workerprx);	
 			System.out.println("Worker Online");
 		}
+		
 	}
 
+
 	@Override
-	public void detach(WorkerPrx workerprx, Current current) {
-		for(Slave s: workers) {
-			if(!s.callback(current)) {
-				this.workers.remove(workerprx);
-			}
+	public void detach(Value workerprx, Current current) {
+		Slave w = getWorker();
+		if(!w.callback(current)) {
+			this.workers.remove(workerprx);
+			System.out.println("Worker Offline");
 		}
+		
 	}
-	
-	public void ready() {
-		for(Slave s: workers) {
-			if(s.callback(r, current))
-		}
-	}
+
+
+
+
 
     
     

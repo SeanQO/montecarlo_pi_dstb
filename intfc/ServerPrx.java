@@ -17,40 +17,110 @@ package intfc;
 
 public interface ServerPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default void sendPoints(WorkerPrx proxy, long[] r)
+    default void callCallBack(WorkerPrx proxy)
     {
-        sendPoints(proxy, r, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        callCallBack(proxy, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void sendPoints(WorkerPrx proxy, long[] r, java.util.Map<String, String> context)
+    default void callCallBack(WorkerPrx proxy, java.util.Map<String, String> context)
     {
-        _iceI_sendPointsAsync(proxy, r, context, true).waitForResponse();
+        _iceI_callCallBackAsync(proxy, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> sendPointsAsync(WorkerPrx proxy, long[] r)
+    default java.util.concurrent.CompletableFuture<Void> callCallBackAsync(WorkerPrx proxy)
     {
-        return _iceI_sendPointsAsync(proxy, r, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_callCallBackAsync(proxy, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> sendPointsAsync(WorkerPrx proxy, long[] r, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> callCallBackAsync(WorkerPrx proxy, java.util.Map<String, String> context)
     {
-        return _iceI_sendPointsAsync(proxy, r, context, false);
+        return _iceI_callCallBackAsync(proxy, context, false);
     }
 
     /**
      * @hidden
      * @param iceP_proxy -
-     * @param iceP_r -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_sendPointsAsync(WorkerPrx iceP_proxy, long[] iceP_r, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_callCallBackAsync(WorkerPrx iceP_proxy, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "sendPoints", null, sync, null);
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "callCallBack", null, sync, null);
         f.invoke(false, context, null, ostr -> {
                      ostr.writeProxy(iceP_proxy);
-                     ostr.writeLongSeq(iceP_r);
+                 }, null);
+        return f;
+    }
+
+    default void attach(WorkerPrx workerprx)
+    {
+        attach(workerprx, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default void attach(WorkerPrx workerprx, java.util.Map<String, String> context)
+    {
+        _iceI_attachAsync(workerprx, context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> attachAsync(WorkerPrx workerprx)
+    {
+        return _iceI_attachAsync(workerprx, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> attachAsync(WorkerPrx workerprx, java.util.Map<String, String> context)
+    {
+        return _iceI_attachAsync(workerprx, context, false);
+    }
+
+    /**
+     * @hidden
+     * @param iceP_workerprx -
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_attachAsync(WorkerPrx iceP_workerprx, java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "attach", null, sync, null);
+        f.invoke(false, context, null, ostr -> {
+                     ostr.writeProxy(iceP_workerprx);
+                 }, null);
+        return f;
+    }
+
+    default void detach(WorkerPrx workerprx)
+    {
+        detach(workerprx, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default void detach(WorkerPrx workerprx, java.util.Map<String, String> context)
+    {
+        _iceI_detachAsync(workerprx, context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> detachAsync(WorkerPrx workerprx)
+    {
+        return _iceI_detachAsync(workerprx, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> detachAsync(WorkerPrx workerprx, java.util.Map<String, String> context)
+    {
+        return _iceI_detachAsync(workerprx, context, false);
+    }
+
+    /**
+     * @hidden
+     * @param iceP_workerprx -
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_detachAsync(WorkerPrx iceP_workerprx, java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "detach", null, sync, null);
+        f.invoke(false, context, null, ostr -> {
+                     ostr.writeProxy(iceP_workerprx);
                  }, null);
         return f;
     }

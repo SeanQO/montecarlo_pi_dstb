@@ -1,10 +1,5 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;  
-import java.util.Map;  
-import java.util.Queue;  
-import java.util.concurrent.ConcurrentHashMap;  
-import java.util.concurrent.ConcurrentLinkedQueue;  
   
 public class Master implements Runnable{   
     //Subtask Processing Result Set  
@@ -36,6 +31,8 @@ public class Master implements Runnable{
 //        return true;  
 //    }  
       
+    
+    
   //Submit a subtask  
     private BigDecimal calcPi() {  
         //todo  
@@ -45,11 +42,11 @@ public class Master implements Runnable{
     // print the results to the console
  	private void print(int n) {
  		System.out.println("Calculation with: " + n);
- 		System.out.println("Points in: " + this.manager.getIn() + ", points out: " + this.manager.getOut());
- 		System.out.println("Pi calculated: " + this.calcPi() + ", In+out: " + (this.manager.getOut() + this.manager.getIn()));
+ 		System.out.println("Points in: " + this.getIn() + ", points out: " + this.getOut());
+ 		System.out.println("Pi calculated: " + this.calcPi() + ", In+out: " + (this.getOut() + this.getIn()));
  		System.out.println(
  				"Difference: Pi calculated (" + this.calcPi() + ") - Pi (" + this.pi.setScale(10, RoundingMode.CEILING)
- 						+ "): " + this.calcPi().subtract(this.manager.getPi()).abs().setScale(10, RoundingMode.CEILING));
+ 						+ "): " + this.calcPi().subtract(this.pi).abs().setScale(10, RoundingMode.CEILING));
  		System.out.println("--------------- " + "\n");
  	}
       
@@ -58,15 +55,48 @@ public class Master implements Runnable{
     	while(true) {
 			long task = points - calcPoints;
 			if(task == 0) {
-				long[] pointsCalc = this.manager.getWorker().resolveTask(task);
-				this.in = pointsCalc[0];
-				this.out = pointsCalc[1];
-				
 				// calculate current PI
 				this.piCalc = this.calcPi();
+				break;
+			}else {
+				long[] pointsCalc = this.manager.getWorker().resolveTask(task);
+				this.setIn(pointsCalc[0]);
+				this.setOut(pointsCalc[1]);
 			}
-			
     	}
+
+	}
+    
+    public void runCallBack() {
+    	
+        try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize("config.server"))
+        {
+            
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
+
+            com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
+            adapter.add(new WorkerManager(), com.zeroc.Ice.Util.stringToIdentity("server"));
+            adapter.activate();
+            manager.getWorker();
+            communicator.waitForShutdown();
+            
+        }
+    }
+
+	public long getIn() {
+		return in;
+	}
+
+	public void setIn(long in) {
+		this.in = in;
+	}
+
+	public long getOut() {
+		return out;
+	}
+
+	public void setOut(long out) {
+		this.out = out;
 	}  
     
 

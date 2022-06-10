@@ -61,7 +61,6 @@ public class Slave implements Worker{
         callback(working, current);
         return inOut;
 	}
-	
 
 	@Override
 	public boolean callback(Current current) {
@@ -72,6 +71,5 @@ public class Slave implements Worker{
 			
 			return false;
 		}
-		
 	}
 }  

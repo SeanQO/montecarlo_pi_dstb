@@ -17,7 +17,11 @@ package intfc;
 
 public interface Server extends com.zeroc.Ice.Object
 {
-    void sendPoints(WorkerPrx proxy, long[] r, com.zeroc.Ice.Current current);
+    void callCallBack(WorkerPrx proxy, com.zeroc.Ice.Current current);
+
+    void attach(WorkerPrx workerprx, com.zeroc.Ice.Current current);
+
+    void detach(WorkerPrx workerprx, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -50,27 +54,63 @@ public interface Server extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_sendPoints(Server obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_callCallBack(Server obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
         WorkerPrx iceP_proxy;
-        long[] iceP_r;
         iceP_proxy = WorkerPrx.uncheckedCast(istr.readProxy());
-        iceP_r = istr.readLongSeq();
         inS.endReadParams();
-        obj.sendPoints(iceP_proxy, iceP_r, current);
+        obj.callCallBack(iceP_proxy, current);
+        return inS.setResult(inS.writeEmptyParams());
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_attach(Server obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        com.zeroc.Ice.InputStream istr = inS.startReadParams();
+        WorkerPrx iceP_workerprx;
+        iceP_workerprx = WorkerPrx.uncheckedCast(istr.readProxy());
+        inS.endReadParams();
+        obj.attach(iceP_workerprx, current);
+        return inS.setResult(inS.writeEmptyParams());
+    }
+
+    /**
+     * @hidden
+     * @param obj -
+     * @param inS -
+     * @param current -
+     * @return -
+    **/
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_detach(Server obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    {
+        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
+        com.zeroc.Ice.InputStream istr = inS.startReadParams();
+        WorkerPrx iceP_workerprx;
+        iceP_workerprx = WorkerPrx.uncheckedCast(istr.readProxy());
+        inS.endReadParams();
+        obj.detach(iceP_workerprx, current);
         return inS.setResult(inS.writeEmptyParams());
     }
 
     /** @hidden */
     final static String[] _iceOps =
     {
+        "attach",
+        "callCallBack",
+        "detach",
         "ice_id",
         "ice_ids",
         "ice_isA",
-        "ice_ping",
-        "sendPoints"
+        "ice_ping"
     };
 
     /** @hidden */
@@ -88,23 +128,31 @@ public interface Server extends com.zeroc.Ice.Object
         {
             case 0:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return _iceD_attach(this, in, current);
             }
             case 1:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return _iceD_callCallBack(this, in, current);
             }
             case 2:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return _iceD_detach(this, in, current);
             }
             case 3:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 4:
             {
-                return _iceD_sendPoints(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+            }
+            case 5:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+            }
+            case 6:
+            {
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
         }
 

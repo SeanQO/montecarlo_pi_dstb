@@ -19,7 +19,7 @@ public interface Worker extends com.zeroc.Ice.Object
 {
     long[] resolveTask(long l, com.zeroc.Ice.Current current);
 
-    long[] callback(long r, com.zeroc.Ice.Current current);
+    boolean callback(com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -76,13 +76,10 @@ public interface Worker extends com.zeroc.Ice.Object
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_callback(Worker obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        long iceP_r;
-        iceP_r = istr.readLong();
-        inS.endReadParams();
-        long[] ret = obj.callback(iceP_r, current);
+        inS.readEmptyParams();
+        boolean ret = obj.callback(current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeLongSeq(ret);
+        ostr.writeBool(ret);
         inS.endWriteParams(ostr);
         return inS.setResult(ostr);
     }

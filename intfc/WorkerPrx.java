@@ -57,41 +57,38 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
         return f;
     }
 
-    default long[] callback(long r)
+    default boolean callback()
     {
-        return callback(r, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return callback(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default long[] callback(long r, java.util.Map<String, String> context)
+    default boolean callback(java.util.Map<String, String> context)
     {
-        return _iceI_callbackAsync(r, context, true).waitForResponse();
+        return _iceI_callbackAsync(context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> callbackAsync(long r)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> callbackAsync()
     {
-        return _iceI_callbackAsync(r, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_callbackAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> callbackAsync(long r, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.Boolean> callbackAsync(java.util.Map<String, String> context)
     {
-        return _iceI_callbackAsync(r, context, false);
+        return _iceI_callbackAsync(context, false);
     }
 
     /**
      * @hidden
-     * @param iceP_r -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_callbackAsync(long iceP_r, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> _iceI_callbackAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<long[]> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "callback", null, sync, null);
-        f.invoke(true, context, null, ostr -> {
-                     ostr.writeLong(iceP_r);
-                 }, istr -> {
-                     long[] ret;
-                     ret = istr.readLongSeq();
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.Boolean> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "callback", null, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     boolean ret;
+                     ret = istr.readBool();
                      return ret;
                  });
         return f;

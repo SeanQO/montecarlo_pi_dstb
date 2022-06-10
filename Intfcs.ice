@@ -5,19 +5,17 @@ module intfc
     interface Worker
     {
         resoults resolveTask(long l);
-        resoults callback(long r);
+        bool callback();
     }
 
-    interface Subject
-    {
-        void attach(Worker* workerprx);
-        void detach(Worker* workerprx);
-    }   
 
-    interface Server
-    {
-	void sendPoints(Worker* proxy, resoults r);
-    }
+    interface Server{
+  
+       void callCallBack(Worker* proxy);
+       void attach(Worker* workerprx);
+       void detach(Worker* workerprx);
+
+    }	
 
 
     
