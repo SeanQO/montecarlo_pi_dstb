@@ -1,15 +1,11 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Master {
     private static Client c;
     private static MasterController controller;
-
-    //Divide points constraints
-    public final static int PWR1TO4 = 2;
-    public final static int PWR5TO6 = 4;
-    public final static int PWR7 = 5;
-    public final static int PWR8 = 8;
 
     //Total points
     protected long points;
@@ -23,8 +19,10 @@ public class Master {
 	private long in = 0;
 	//points outside circle
 	private long out = 0;
-
-    private long task;
+    //Max dots to randomize
+    private final static long TASK = 10000000;
+    //Seed to random
+    private long seed = 1;
 
 	public static void main(String[] args) {
         c = new Client();
@@ -48,13 +46,26 @@ public class Master {
 	}
 
     public BigDecimal calcPi() {  
-        //todo  
-    	return new BigDecimal(0.0);
+        BigDecimal piTmp = BigDecimal
+				.valueOf(4.0 * ((double) this.getIn() / ((double) this.getIn() + (double) this.getOut())));
+		return piTmp;
     }  
+
+    public void pointsReady(long[] inOut){
+        this.in += inOut[0];
+        this.out += inOut[1];
+
+        long currentPoints = getIn() + getOut();
+
+        if (currentPoints == this.points) {
+            this.piCalc = calcPi();
+            print();
+        }
+    }
     
     // print the results to the console
- 	private void print(int n) {
- 		System.out.println("Calculation with: " + n);
+ 	private void print() {
+ 		System.out.println("Calculation with: " + points);
  		System.out.println("Points in: " + this.getIn() + ", points out: " + this.getOut());
  		System.out.println("Pi calculated: " + this.calcPi() + ", In+out: " + (this.getOut() + this.getIn()));
  		System.out.println(
@@ -79,36 +90,20 @@ public class Master {
 		this.out = out;
 	}
 
-    public int parametrization(){
-        int divider = 1;
-
-        if (points <= 10000) {
-            divider = PWR1TO4;
-        } else if (points <= 1000000) {
-            divider = PWR5TO6;
-        } else if (points <= 10000000) {
-            divider = PWR7;
-        } else {
-            divider = PWR8;
-        }
-
-        return divider;
-    }
-
-    private void setTask(long t){
-        switch(parametrization()){
-            case PWR1TO4:
-                this.task = points/(long)PWR1TO4;
-            break;
-            case PWR5TO6:
-                this.task = points/(long)PWR5TO6;
-            break;
-            case PWR7:
-                this.task = points/(long)PWR7;
-            break;
-            case PWR8:
-                this.task = points/(long)PWR8;
-            break;
+    private void getInOut(){
+        while (calcPoints < points) {
+            long still = points;
+            if (calcPoints != 0) {
+                still -= calcPoints;
+            }
+            ExecutorService exe = Executors.newFixedThreadPool(10);
+            while (still > 0) {
+                exe.execute(new MasterController(TASK, this, seed));
+                seed++;
+                still -= TASK;
+            }
+            exe.shutdown();
+            while (!exe.isTerminated());
         }
     }
 }
