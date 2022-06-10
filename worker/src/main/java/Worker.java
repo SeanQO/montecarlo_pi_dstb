@@ -26,6 +26,12 @@ public class Worker1 implements Worker{
     //calculate random points
     public long[] resolveTask(long n){
     	
+
+    }
+
+  //calculate random points
+	@Override
+	public long[] resolveTask(long l, Current current) {
         int in = 0;
         int out = 0;
 
@@ -44,17 +50,11 @@ public class Worker1 implements Worker{
         
         long[] inOut = {in, out};
         return inOut;
-    }
-
-	@Override
-	public long[] resolveTask(Current current) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
-	public void callback(long[] r, Current current) {
-		// TODO Auto-generated method stub
+	public long[] callback(long r, Current current) {
+		return resolveTask(r, current);
 		
 	}
 }  

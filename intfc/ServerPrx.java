@@ -15,85 +15,43 @@
 
 package intfc;
 
-public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
+public interface ServerPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default long[] resolveTask(long l)
+    default void sendPoints(WorkerPrx proxy, long[] r)
     {
-        return resolveTask(l, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        sendPoints(proxy, r, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default long[] resolveTask(long l, java.util.Map<String, String> context)
+    default void sendPoints(WorkerPrx proxy, long[] r, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(l, context, true).waitForResponse();
+        _iceI_sendPointsAsync(proxy, r, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l)
+    default java.util.concurrent.CompletableFuture<Void> sendPointsAsync(WorkerPrx proxy, long[] r)
     {
-        return _iceI_resolveTaskAsync(l, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_sendPointsAsync(proxy, r, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> sendPointsAsync(WorkerPrx proxy, long[] r, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(l, context, false);
-    }
-
-    /**
-     * @hidden
-     * @param iceP_l -
-     * @param context -
-     * @param sync -
-     * @return -
-     **/
-    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_resolveTaskAsync(long iceP_l, java.util.Map<String, String> context, boolean sync)
-    {
-        com.zeroc.IceInternal.OutgoingAsync<long[]> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "resolveTask", null, sync, null);
-        f.invoke(true, context, null, ostr -> {
-                     ostr.writeLong(iceP_l);
-                 }, istr -> {
-                     long[] ret;
-                     ret = istr.readLongSeq();
-                     return ret;
-                 });
-        return f;
-    }
-
-    default long[] callback(long r)
-    {
-        return callback(r, com.zeroc.Ice.ObjectPrx.noExplicitContext);
-    }
-
-    default long[] callback(long r, java.util.Map<String, String> context)
-    {
-        return _iceI_callbackAsync(r, context, true).waitForResponse();
-    }
-
-    default java.util.concurrent.CompletableFuture<long[]> callbackAsync(long r)
-    {
-        return _iceI_callbackAsync(r, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
-    }
-
-    default java.util.concurrent.CompletableFuture<long[]> callbackAsync(long r, java.util.Map<String, String> context)
-    {
-        return _iceI_callbackAsync(r, context, false);
+        return _iceI_sendPointsAsync(proxy, r, context, false);
     }
 
     /**
      * @hidden
+     * @param iceP_proxy -
      * @param iceP_r -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_callbackAsync(long iceP_r, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_sendPointsAsync(WorkerPrx iceP_proxy, long[] iceP_r, java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<long[]> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "callback", null, sync, null);
-        f.invoke(true, context, null, ostr -> {
-                     ostr.writeLong(iceP_r);
-                 }, istr -> {
-                     long[] ret;
-                     ret = istr.readLongSeq();
-                     return ret;
-                 });
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "sendPoints", null, sync, null);
+        f.invoke(false, context, null, ostr -> {
+                     ostr.writeProxy(iceP_proxy);
+                     ostr.writeLongSeq(iceP_r);
+                 }, null);
         return f;
     }
 
@@ -103,9 +61,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param obj The untyped proxy.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static WorkerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj)
+    static ServerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, ice_staticId(), WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, ice_staticId(), ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -115,9 +73,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param context The Context map to send with the invocation.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static WorkerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, java.util.Map<String, String> context)
+    static ServerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, java.util.Map<String, String> context)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, context, ice_staticId(), WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, context, ice_staticId(), ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -127,9 +85,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param facet The name of the desired facet.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static WorkerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
+    static ServerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, ice_staticId(), WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, ice_staticId(), ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -140,9 +98,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param context The Context map to send with the invocation.
      * @return A proxy for this type, or null if the object does not support this type.
      **/
-    static WorkerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet, java.util.Map<String, String> context)
+    static ServerPrx checkedCast(com.zeroc.Ice.ObjectPrx obj, String facet, java.util.Map<String, String> context)
     {
-        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, context, ice_staticId(), WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._checkedCast(obj, facet, context, ice_staticId(), ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -150,9 +108,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param obj The untyped proxy.
      * @return A proxy for this type.
      **/
-    static WorkerPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj)
+    static ServerPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj)
     {
-        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -161,9 +119,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @param facet The name of the desired facet.
      * @return A proxy for this type.
      **/
-    static WorkerPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
+    static ServerPrx uncheckedCast(com.zeroc.Ice.ObjectPrx obj, String facet)
     {
-        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, facet, WorkerPrx.class, _WorkerPrxI.class);
+        return com.zeroc.Ice.ObjectPrx._uncheckedCast(obj, facet, ServerPrx.class, _ServerPrxI.class);
     }
 
     /**
@@ -172,9 +130,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified per-proxy context.
      **/
     @Override
-    default WorkerPrx ice_context(java.util.Map<String, String> newContext)
+    default ServerPrx ice_context(java.util.Map<String, String> newContext)
     {
-        return (WorkerPrx)_ice_context(newContext);
+        return (ServerPrx)_ice_context(newContext);
     }
 
     /**
@@ -183,9 +141,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified adapter ID.
      **/
     @Override
-    default WorkerPrx ice_adapterId(String newAdapterId)
+    default ServerPrx ice_adapterId(String newAdapterId)
     {
-        return (WorkerPrx)_ice_adapterId(newAdapterId);
+        return (ServerPrx)_ice_adapterId(newAdapterId);
     }
 
     /**
@@ -194,9 +152,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified endpoints.
      **/
     @Override
-    default WorkerPrx ice_endpoints(com.zeroc.Ice.Endpoint[] newEndpoints)
+    default ServerPrx ice_endpoints(com.zeroc.Ice.Endpoint[] newEndpoints)
     {
-        return (WorkerPrx)_ice_endpoints(newEndpoints);
+        return (ServerPrx)_ice_endpoints(newEndpoints);
     }
 
     /**
@@ -205,9 +163,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified locator cache timeout.
      **/
     @Override
-    default WorkerPrx ice_locatorCacheTimeout(int newTimeout)
+    default ServerPrx ice_locatorCacheTimeout(int newTimeout)
     {
-        return (WorkerPrx)_ice_locatorCacheTimeout(newTimeout);
+        return (ServerPrx)_ice_locatorCacheTimeout(newTimeout);
     }
 
     /**
@@ -216,9 +174,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified invocation timeout.
      **/
     @Override
-    default WorkerPrx ice_invocationTimeout(int newTimeout)
+    default ServerPrx ice_invocationTimeout(int newTimeout)
     {
-        return (WorkerPrx)_ice_invocationTimeout(newTimeout);
+        return (ServerPrx)_ice_invocationTimeout(newTimeout);
     }
 
     /**
@@ -227,9 +185,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified caching policy.
      **/
     @Override
-    default WorkerPrx ice_connectionCached(boolean newCache)
+    default ServerPrx ice_connectionCached(boolean newCache)
     {
-        return (WorkerPrx)_ice_connectionCached(newCache);
+        return (ServerPrx)_ice_connectionCached(newCache);
     }
 
     /**
@@ -238,9 +196,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified endpoint selection policy.
      **/
     @Override
-    default WorkerPrx ice_endpointSelection(com.zeroc.Ice.EndpointSelectionType newType)
+    default ServerPrx ice_endpointSelection(com.zeroc.Ice.EndpointSelectionType newType)
     {
-        return (WorkerPrx)_ice_endpointSelection(newType);
+        return (ServerPrx)_ice_endpointSelection(newType);
     }
 
     /**
@@ -251,9 +209,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified selection policy.
      **/
     @Override
-    default WorkerPrx ice_secure(boolean b)
+    default ServerPrx ice_secure(boolean b)
     {
-        return (WorkerPrx)_ice_secure(b);
+        return (ServerPrx)_ice_secure(b);
     }
 
     /**
@@ -262,9 +220,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified encoding version.
      **/
     @Override
-    default WorkerPrx ice_encodingVersion(com.zeroc.Ice.EncodingVersion e)
+    default ServerPrx ice_encodingVersion(com.zeroc.Ice.EncodingVersion e)
     {
-        return (WorkerPrx)_ice_encodingVersion(e);
+        return (ServerPrx)_ice_encodingVersion(e);
     }
 
     /**
@@ -275,9 +233,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified selection policy.
      **/
     @Override
-    default WorkerPrx ice_preferSecure(boolean b)
+    default ServerPrx ice_preferSecure(boolean b)
     {
-        return (WorkerPrx)_ice_preferSecure(b);
+        return (ServerPrx)_ice_preferSecure(b);
     }
 
     /**
@@ -286,9 +244,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified router.
      **/
     @Override
-    default WorkerPrx ice_router(com.zeroc.Ice.RouterPrx router)
+    default ServerPrx ice_router(com.zeroc.Ice.RouterPrx router)
     {
-        return (WorkerPrx)_ice_router(router);
+        return (ServerPrx)_ice_router(router);
     }
 
     /**
@@ -297,9 +255,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified locator.
      **/
     @Override
-    default WorkerPrx ice_locator(com.zeroc.Ice.LocatorPrx locator)
+    default ServerPrx ice_locator(com.zeroc.Ice.LocatorPrx locator)
     {
-        return (WorkerPrx)_ice_locator(locator);
+        return (ServerPrx)_ice_locator(locator);
     }
 
     /**
@@ -308,9 +266,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified collocation optimization.
      **/
     @Override
-    default WorkerPrx ice_collocationOptimized(boolean b)
+    default ServerPrx ice_collocationOptimized(boolean b)
     {
-        return (WorkerPrx)_ice_collocationOptimized(b);
+        return (ServerPrx)_ice_collocationOptimized(b);
     }
 
     /**
@@ -318,9 +276,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses twoway invocations.
      **/
     @Override
-    default WorkerPrx ice_twoway()
+    default ServerPrx ice_twoway()
     {
-        return (WorkerPrx)_ice_twoway();
+        return (ServerPrx)_ice_twoway();
     }
 
     /**
@@ -328,9 +286,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses oneway invocations.
      **/
     @Override
-    default WorkerPrx ice_oneway()
+    default ServerPrx ice_oneway()
     {
-        return (WorkerPrx)_ice_oneway();
+        return (ServerPrx)_ice_oneway();
     }
 
     /**
@@ -338,9 +296,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses batch oneway invocations.
      **/
     @Override
-    default WorkerPrx ice_batchOneway()
+    default ServerPrx ice_batchOneway()
     {
-        return (WorkerPrx)_ice_batchOneway();
+        return (ServerPrx)_ice_batchOneway();
     }
 
     /**
@@ -348,9 +306,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses datagram invocations.
      **/
     @Override
-    default WorkerPrx ice_datagram()
+    default ServerPrx ice_datagram()
     {
-        return (WorkerPrx)_ice_datagram();
+        return (ServerPrx)_ice_datagram();
     }
 
     /**
@@ -358,9 +316,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy that uses batch datagram invocations.
      **/
     @Override
-    default WorkerPrx ice_batchDatagram()
+    default ServerPrx ice_batchDatagram()
     {
-        return (WorkerPrx)_ice_batchDatagram();
+        return (ServerPrx)_ice_batchDatagram();
     }
 
     /**
@@ -369,9 +327,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified compression setting.
      **/
     @Override
-    default WorkerPrx ice_compress(boolean co)
+    default ServerPrx ice_compress(boolean co)
     {
-        return (WorkerPrx)_ice_compress(co);
+        return (ServerPrx)_ice_compress(co);
     }
 
     /**
@@ -380,9 +338,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified timeout.
      **/
     @Override
-    default WorkerPrx ice_timeout(int t)
+    default ServerPrx ice_timeout(int t)
     {
-        return (WorkerPrx)_ice_timeout(t);
+        return (ServerPrx)_ice_timeout(t);
     }
 
     /**
@@ -391,9 +349,9 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A proxy with the specified connection ID.
      **/
     @Override
-    default WorkerPrx ice_connectionId(String connectionId)
+    default ServerPrx ice_connectionId(String connectionId)
     {
-        return (WorkerPrx)_ice_connectionId(connectionId);
+        return (ServerPrx)_ice_connectionId(connectionId);
     }
 
     /**
@@ -402,13 +360,13 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
      * @return A fixed proxy bound to the given connection.
      **/
     @Override
-    default WorkerPrx ice_fixed(com.zeroc.Ice.Connection connection)
+    default ServerPrx ice_fixed(com.zeroc.Ice.Connection connection)
     {
-        return (WorkerPrx)_ice_fixed(connection);
+        return (ServerPrx)_ice_fixed(connection);
     }
 
     static String ice_staticId()
     {
-        return "::intfc::Worker";
+        return "::intfc::Server";
     }
 }

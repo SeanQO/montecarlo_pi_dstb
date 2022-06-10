@@ -15,17 +15,15 @@
 
 package intfc;
 
-public interface Worker extends com.zeroc.Ice.Object
+public interface Server extends com.zeroc.Ice.Object
 {
-    long[] resolveTask(long l, com.zeroc.Ice.Current current);
-
-    long[] callback(long r, com.zeroc.Ice.Current current);
+    void sendPoints(WorkerPrx proxy, long[] r, com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
     {
         "::Ice::Object",
-        "::intfc::Worker"
+        "::intfc::Server"
     };
 
     @Override
@@ -42,7 +40,7 @@ public interface Worker extends com.zeroc.Ice.Object
 
     static String ice_staticId()
     {
-        return "::intfc::Worker";
+        return "::intfc::Server";
     }
 
     /**
@@ -52,50 +50,27 @@ public interface Worker extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_resolveTask(Worker obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
+    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_sendPoints(Server obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        long iceP_l;
-        iceP_l = istr.readLong();
+        WorkerPrx iceP_proxy;
+        long[] iceP_r;
+        iceP_proxy = WorkerPrx.uncheckedCast(istr.readProxy());
+        iceP_r = istr.readLongSeq();
         inS.endReadParams();
-        long[] ret = obj.resolveTask(iceP_l, current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeLongSeq(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_callback(Worker obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        long iceP_r;
-        iceP_r = istr.readLong();
-        inS.endReadParams();
-        long[] ret = obj.callback(iceP_r, current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeLongSeq(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
+        obj.sendPoints(iceP_proxy, iceP_r, current);
+        return inS.setResult(inS.writeEmptyParams());
     }
 
     /** @hidden */
     final static String[] _iceOps =
     {
-        "callback",
         "ice_id",
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "resolveTask"
+        "sendPoints"
     };
 
     /** @hidden */
@@ -113,27 +88,23 @@ public interface Worker extends com.zeroc.Ice.Object
         {
             case 0:
             {
-                return _iceD_callback(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 1:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 2:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
             case 3:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
             case 4:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
-            }
-            case 5:
-            {
-                return _iceD_resolveTask(this, in, current);
+                return _iceD_sendPoints(this, in, current);
             }
         }
 

@@ -58,7 +58,7 @@ public class Master implements Runnable{
     	while(true) {
 			long task = points - calcPoints;
 			if(task == 0) {
-				long[] pointsCalc = this.manager.getWorker().resolveTask();
+				long[] pointsCalc = this.manager.getWorker().resolveTask(task);
 				this.in = pointsCalc[0];
 				this.out = pointsCalc[1];
 				

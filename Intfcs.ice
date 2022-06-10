@@ -1,16 +1,24 @@
 module intfc
 {
-    interface Subject
-    {
-        void attach(Object worker);
-        void detach(Object worker);
-    }   
-
     sequence<long> resoults;
 
     interface Worker
     {
         resoults resolveTask(long l);
-        void callback(resoults r);
+        resoults callback(long r);
     }
+
+    interface Subject
+    {
+        void attach(Worker* workerprx);
+        void detach(Worker* workerprx);
+    }   
+
+    interface Server
+    {
+	void sendPoints(Worker* proxy, resoults r);
+    }
+
+
+    
 }
