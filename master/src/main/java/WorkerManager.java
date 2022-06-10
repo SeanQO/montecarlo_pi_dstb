@@ -2,7 +2,6 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import com.zeroc.Ice.Current;
 import com.zeroc.Ice.Value;
@@ -18,7 +17,7 @@ public class WorkerManager implements Server{
 
 	public WorkerManager(){
 
-		workers = new ConcurrentLinkedQueue<WorkerPrx>();
+		workers = new ArrayDeque<WorkerPrx>();
 	}
 
 	
