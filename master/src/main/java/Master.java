@@ -6,10 +6,10 @@ public class Master {
     private static MasterController controller;
 
     //Divide points constraints
-    public final static long PWR1TO4 = 2;
-    public final static long PWR5TO6 = 4;
-    public final static long PWR7 = 5;
-    public final static long PWR8 = 8;
+    public final static int PWR1TO4 = 2;
+    public final static int PWR5TO6 = 4;
+    public final static int PWR7 = 5;
+    public final static int PWR8 = 8;
 
     //Total points
     protected long points;
@@ -79,11 +79,36 @@ public class Master {
 		this.out = out;
 	}
 
+    public int parametrization(){
+        int divider = 1;
+
+        if (points <= 10000) {
+            divider = PWR1TO4;
+        } else if (points <= 1000000) {
+            divider = PWR5TO6;
+        } else if (points <= 10000000) {
+            divider = PWR7;
+        } else {
+            divider = PWR8;
+        }
+
+        return divider;
+    }
+
     private void setTask(long t){
-        switch(){
-            case 1:
+        switch(parametrization()){
+            case PWR1TO4:
+                this.task = points/(long)PWR1TO4;
+            break;
+            case PWR5TO6:
+                this.task = points/(long)PWR5TO6;
+            break;
+            case PWR7:
+                this.task = points/(long)PWR7;
+            break;
+            case PWR8:
+                this.task = points/(long)PWR8;
             break;
         }
-        this.task = po
     }
 }
