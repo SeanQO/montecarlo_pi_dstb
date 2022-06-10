@@ -4,7 +4,14 @@ import com.zeroc.Ice.Current;
 
 import intfc.Worker;
 
-public class Worker1 implements Worker{        
+public class Slave implements Worker{     
+	
+	boolean working;
+	
+	public Slave() {
+		
+		working = false;
+	}
 //    @Override  
 //    public void run() {  
 //        while(true) {  
@@ -34,8 +41,9 @@ public class Worker1 implements Worker{
 	public long[] resolveTask(long l, Current current) {
         int in = 0;
         int out = 0;
+        working = true;
 
-        for (long i = 0; i < n; i++) {
+        for (long i = 0; i < l; i++) {
         	
             double x = this.getRand();
             double y = this.getRand();
@@ -49,12 +57,21 @@ public class Worker1 implements Worker{
         }
         
         long[] inOut = {in, out};
+        working = false;
+        callback(working, current);
         return inOut;
 	}
+	
 
 	@Override
-	public long[] callback(long r, Current current) {
-		return resolveTask(r, current);
+	public boolean callback(Current current) {
+		if(working == false) {
+			System.out.println("Slave ready");
+			return true;
+		}else {
+			
+			return false;
+		}
 		
 	}
 }  

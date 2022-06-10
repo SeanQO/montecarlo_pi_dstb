@@ -12,11 +12,11 @@ import intfc.WorkerPrx;
 public class WorkerManager implements Subject, Server{
 	
 	private Master controllerMaster;
-	private Queue<Worker1> workers;
+	private Queue<Slave> workers;
 	
 	
-    public Worker1 getWorker() {
-    	Worker1 w;
+    public Slave getWorker() {
+    	Slave w;
     	
     	if(workers.isEmpty()) {
     		w =  null;
@@ -37,16 +37,28 @@ public class WorkerManager implements Subject, Server{
 
 	@Override
 	public void attach(WorkerPrx workerprx, Current current) {
-		this.workers.add((Worker1) workerprx);	
 		
+		Slave w = getWorker(); 
+		if(w.callback(current)) {
+			this.workers.add((Slave) workerprx);	
+			System.out.println("Worker Online");
+		}
 	}
 
 	@Override
 	public void detach(WorkerPrx workerprx, Current current) {
-		this.workers.remove(workerprx);
-		
+		for(Slave s: workers) {
+			if(!s.callback(current)) {
+				this.workers.remove(workerprx);
+			}
+		}
 	}
-
+	
+	public void ready() {
+		for(Slave s: workers) {
+			if(s.callback(r, current))
+		}
+	}
 
     
     
