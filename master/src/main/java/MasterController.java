@@ -12,9 +12,6 @@ public class MasterController implements Runnable{
 
 	private Random r;
 
-	private int in;
-	private int out;
-
 	public MasterController(Long maxDot, GPoints main, long seed) {
 		this.main = main;
 		this.maxDot = maxDot;
@@ -31,21 +28,10 @@ public class MasterController implements Runnable{
     @Override
 	public void run() {
 		//do while dots = max dots
-    	for (int i = 0; i < maxDot; i++) {
-			double x = this.getRand();
-			double y = this.getRand();
-			if (x * x + y * y <= 1) {
-				// point is inside the circle
-				this.in++;
-			} else {
-				// point is outside the circle
-				this.out++;
-			}
+    	long[] inOut = manager.getWorker().resolveTask(maxDot);
 
-		}
-
-		main.setIn(in);
-		main.setOut(out);
+		main.setIn(inOut[0]);
+		main.setOut(inOut[1]);
 
 	}
 
