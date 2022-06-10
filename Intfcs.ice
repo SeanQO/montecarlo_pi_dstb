@@ -12,4 +12,8 @@ module intfc
     {
         resoults resolveTask();
     }
+
+    interface Client {
+        void callback(resoults);
+    }
 }
