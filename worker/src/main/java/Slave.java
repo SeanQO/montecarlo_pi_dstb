@@ -67,8 +67,26 @@ public class Slave implements Worker{
 
     @Override
     public long[] resolveTask(long l, Current current) {
-        // TODO Auto-generated method stub
-        return null;
+        int in = 0;
+        int out = 0;
+        working = true;
+        System.out.println("Working");
+        for (long i = 0; i < l; i++) {
+        	
+            double x = this.getRand();
+            double y = this.getRand();
+            if (x * x + y * y <= 1) {
+                // point is inside the circle
+                in = in++;
+            } else {
+                // point is outside the circle
+                out = out++;
+            }
+        }
+        
+        long[] inOut = {in, out};
+        working = false;
+        return inOut;
     }
 
 }  

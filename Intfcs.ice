@@ -4,6 +4,7 @@ module intfc
 
     interface Worker
     {
+        resoults resolveTask(long l);
         bool callback();
     }
 
