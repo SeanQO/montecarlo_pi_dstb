@@ -4,7 +4,7 @@ public class MasterController implements Runnable{
     //Subtask Processing Result Set  
     protected WorkerManager manager;
 
-	private Master main;
+	private GPoints main;
 
 	private Long maxDot;
 
@@ -15,14 +15,14 @@ public class MasterController implements Runnable{
 	private int in;
 	private int out;
 
-	public MasterController(Long maxDot, Master main, long seed) {
+	public MasterController(Long maxDot, GPoints main, long seed) {
 		this.main = main;
 		this.maxDot = maxDot;
 		this.seed = seed;
 		this.r = new Random(this.seed);
     }
 
-	public MasterController(Long maxDot, Master main) {
+	public MasterController(Long maxDot, GPoints main) {
 		this.main = main;
 		this.maxDot = maxDot;
 		this.r = new Random();
