@@ -11,9 +11,6 @@ module intfc
     interface Worker
     {
         resoults resolveTask();
-    }
-
-    interface Client {
-        void callback(resoults);
+        void callback(resoults r);
     }
 }

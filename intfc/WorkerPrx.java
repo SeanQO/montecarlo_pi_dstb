@@ -54,6 +54,42 @@ public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
         return f;
     }
 
+    default void callback(long[] r)
+    {
+        callback(r, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default void callback(long[] r, java.util.Map<String, String> context)
+    {
+        _iceI_callbackAsync(r, context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> callbackAsync(long[] r)
+    {
+        return _iceI_callbackAsync(r, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> callbackAsync(long[] r, java.util.Map<String, String> context)
+    {
+        return _iceI_callbackAsync(r, context, false);
+    }
+
+    /**
+     * @hidden
+     * @param iceP_r -
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_callbackAsync(long[] iceP_r, java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "callback", null, sync, null);
+        f.invoke(false, context, null, ostr -> {
+                     ostr.writeLongSeq(iceP_r);
+                 }, null);
+        return f;
+    }
+
     /**
      * Contacts the remote server to verify that the object implements this type.
      * Raises a local exception if a communication error occurs.
