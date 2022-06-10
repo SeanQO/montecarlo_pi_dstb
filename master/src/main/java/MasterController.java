@@ -1,4 +1,7 @@
 import java.util.Random;
+
+import intfc.Worker;
+import intfc.WorkerPrx;
   
 public class MasterController implements Runnable{   
     //Subtask Processing Result Set  
@@ -28,7 +31,12 @@ public class MasterController implements Runnable{
     @Override
 	public void run() {
 		//do while dots = max dots
-    	long[] inOut = manager.getWorker().resolveTask(maxDot);
+		WorkerPrx nnn = manager.getWorker();
+		long[] inOut = new long[]{0,0};
+		if (nnn != null) {
+			inOut = nnn.resolveTask(maxDot);
+		}
+    	
 
 		main.setIn(inOut[0]);
 		main.setOut(inOut[1]);

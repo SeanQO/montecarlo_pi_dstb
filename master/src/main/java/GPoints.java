@@ -42,6 +42,8 @@ public class GPoints {
             print();
         }
     }
+
+
     
     // print the results to the console
  	private void print() {
@@ -72,7 +74,7 @@ public class GPoints {
 
     public void getInOut(){
         while (calcPoints < points) {
-            long still = points;
+            long still = 20;
             if (calcPoints != 0) {
                 still -= calcPoints;
             }

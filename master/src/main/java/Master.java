@@ -5,11 +5,7 @@ public class Master {
     
 
 	public static void main(String[] args) {
-        c = new Client();
-        long points = c.menu();
-        System.out.println("ENTERED POINTS --> " + points);
-
-        thread = new GPoints(points);
+        
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "master.config"))
         {
             
@@ -19,6 +15,11 @@ public class Master {
             adapter.add(new WorkerManager(), com.zeroc.Ice.Util.stringToIdentity("server"));
             adapter.activate();
 
+            c = new Client();
+            long points = c.menu();
+            System.out.println("ENTERED POINTS --> " + points);
+
+            thread = new GPoints(points);
             thread.getInOut();
 
             communicator.waitForShutdown();

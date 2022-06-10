@@ -31,8 +31,7 @@ public class Slave implements Worker{
 	}
 
   //calculate random points
-	@Override
-	public long[] resolveTask(long l, Current current) {
+	public long[] taskResolver(long l) {
         int in = 0;
         int out = 0;
         working = true;
@@ -52,7 +51,6 @@ public class Slave implements Worker{
         
         long[] inOut = {in, out};
         working = false;
-        callback(current);
         return inOut;
 	}
 
@@ -66,4 +64,11 @@ public class Slave implements Worker{
 			return false;
 		}
 	}
+
+    @Override
+    public long[] resolveTask(long l, Current current) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }  
