@@ -29,7 +29,7 @@ public class Worker {
 
 
             serverPrx.attach(workerPrx);
-            
+            communicator.waitForShutdown();
         }
 
 	}
