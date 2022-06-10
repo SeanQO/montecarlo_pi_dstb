@@ -1,6 +1,10 @@
-import java.util.Random; 
+import java.util.Random;
 
-public class Worker{        
+import com.zeroc.Ice.Current;
+
+import intfc.Worker;
+
+public class Worker1 implements Worker{        
 //    @Override  
 //    public void run() {  
 //        while(true) {  
@@ -41,4 +45,16 @@ public class Worker{
         long[] inOut = {in, out};
         return inOut;
     }
+
+	@Override
+	public long[] resolveTask(Current current) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void callback(long[] r, Current current) {
+		// TODO Auto-generated method stub
+		
+	}
 }  

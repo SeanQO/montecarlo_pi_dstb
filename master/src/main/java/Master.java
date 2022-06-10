@@ -11,10 +11,17 @@ public class Master implements Runnable{
     protected WorkerManager manager;
     //Total points
     protected long points;
-    //-calculated points
+    //calculated points
     protected long calcPoints;
+    //calculation of pi
 	private BigDecimal piCalc;
-    
+    //Real pi
+	private BigDecimal pi = new BigDecimal(3.141592653589793238462643);
+	//points inside circle
+	private long in = 0;
+	//points outside circle
+	private long out = 0;
+	
     public Master(long points) {  
         this.points = points;
     }  
@@ -38,11 +45,11 @@ public class Master implements Runnable{
     // print the results to the console
  	private void print(int n) {
  		System.out.println("Calculation with: " + n);
- 		System.out.println("Points in: " + this.getIn() + ", points out: " + this.getOut());
- 		System.out.println("Pi calculated: " + this.calcPi() + ", In+out: " + (this.getOut() + this.getIn()));
+ 		System.out.println("Points in: " + this.manager.getIn() + ", points out: " + this.manager.getOut());
+ 		System.out.println("Pi calculated: " + this.calcPi() + ", In+out: " + (this.manager.getOut() + this.manager.getIn()));
  		System.out.println(
  				"Difference: Pi calculated (" + this.calcPi() + ") - Pi (" + this.pi.setScale(10, RoundingMode.CEILING)
- 						+ "): " + this.calcPi().subtract(this.getPi()).abs().setScale(10, RoundingMode.CEILING));
+ 						+ "): " + this.calcPi().subtract(this.manager.getPi()).abs().setScale(10, RoundingMode.CEILING));
  		System.out.println("--------------- " + "\n");
  	}
       
@@ -51,6 +58,10 @@ public class Master implements Runnable{
     	while(true) {
 			long task = points - calcPoints;
 			if(task == 0) {
+				long[] pointsCalc = this.manager.getWorker().resolveTask();
+				this.in = pointsCalc[0];
+				this.out = pointsCalc[1];
+				
 				// calculate current PI
 				this.piCalc = this.calcPi();
 			}
