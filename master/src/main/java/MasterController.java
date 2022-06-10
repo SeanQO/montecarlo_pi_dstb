@@ -1,5 +1,4 @@
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.Random;
   
 public class MasterController implements Runnable{   
     //Subtask Processing Result Set  
@@ -7,28 +6,51 @@ public class MasterController implements Runnable{
 
 	private Master main;
 
-    public MasterController() {  
-        
-    }  
+	private Long maxDot;
+
+	private Long seed;
+
+	private Random r;
+
+	private int in;
+	private int out;
+
+	public MasterController(Long maxDot, Master main, long seed) {
+		this.main = main;
+		this.maxDot = maxDot;
+		this.seed = seed;
+		this.r = new Random(this.seed);
+    }
+
+	public MasterController(Long maxDot, Master main) {
+		this.main = main;
+		this.maxDot = maxDot;
+		this.r = new Random();
+    }
     
     @Override
 	public void run() {
-    	while(true) {
-			long task = manager.;
-			if(task == 0) {
-				// calculate current PI
-				this.piCalc = main.calcPi();
-				break;
-			}else {
-				long[] pointsCalc = this.manager.getWorker().resolveTask(task);
-				//this.setIn(pointsCalc[0]);
-				//this.setOut(pointsCalc[1]);
+		//do while dots = max dots
+    	for (int i = 0; i < maxDot; i++) {
+			double x = this.getRand();
+			double y = this.getRand();
+			if (x * x + y * y <= 1) {
+				// point is inside the circle
+				this.in++;
+			} else {
+				// point is outside the circle
+				this.out++;
 			}
-    	}
+
+		}
+
+		main.setIn(in);
+		main.setOut(out);
 
 	}
 
-	public void excecutable(long task){
-		
+	private double getRand() {
+		return r.nextDouble();
 	}
+
 }  
