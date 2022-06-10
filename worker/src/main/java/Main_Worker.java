@@ -17,6 +17,8 @@ public class Main_Worker {
             {
                 System.err.println("invalid proxy");
             }
+            
+            serverPrx.
 
             com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Worker.Server");
             adapter.add(new Slave(), com.zeroc.Ice.Util.stringToIdentity("cliente"));
@@ -25,7 +27,7 @@ public class Main_Worker {
             WorkerPrx workerPrx = WorkerPrx.uncheckedCast(adapter.createProxy(
             com.zeroc.Ice.Util.stringToIdentity("cliente")));
 
-            
+
             serverPrx.callCallBack(workerPrx);
             
         }
