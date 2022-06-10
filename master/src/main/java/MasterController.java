@@ -14,7 +14,7 @@ public class MasterController implements Runnable{
     @Override
 	public void run() {
     	while(true) {
-			long task = main.points - main.calcPoints;
+			long task = manager.;
 			if(task == 0) {
 				// calculate current PI
 				this.piCalc = main.calcPi();
@@ -26,5 +26,9 @@ public class MasterController implements Runnable{
 			}
     	}
 
+	}
+
+	public void excecutable(long task){
+		
 	}
 }  
