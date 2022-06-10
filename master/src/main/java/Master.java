@@ -1,8 +1,11 @@
 
 public class Master {
+    private static Client c;
 
 	public static void main(String[] args) {
-		
+        c = new Client();
+        long points = c.menu();
+        System.out.println("ENTERED POINTS --> " + points);
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "master.config"))
         {
             
