@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -13,7 +14,12 @@ public class WorkerManager implements Server{
 	
 	private Master controllerMaster;
 	private Queue<WorkerPrx> workers;
-	
+
+	public WorkerManager(){
+
+		workers = new ArrayDeque<WorkerPrx>();
+	}
+
 	
     public WorkerPrx getWorker() {
     	WorkerPrx w;
