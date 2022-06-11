@@ -1,6 +1,7 @@
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 
 import com.zeroc.Ice.Current;
 
@@ -10,6 +11,7 @@ public class Slave implements Worker {
 
     boolean working;
     long[] arrP;
+    private Semaphore sem = new Semaphore(1);
 
     public Slave() {
         working = false;
@@ -44,6 +46,7 @@ public class Slave implements Worker {
 
         while (still > 0) {
             exe.execute(new TPoints(this, l, seed));
+            System.out.println("------");
             seed++;
             long task = arrP[0] + arrP[1];
             still -= task;
@@ -57,7 +60,13 @@ public class Slave implements Worker {
     }
 
     public long[] pointsReady(long[] inOut) {
-        this.arrP = inOut;
+        try {
+            sem.acquire();
+            this.arrP = inOut;
+            sem.release();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
 }
