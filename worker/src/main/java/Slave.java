@@ -59,7 +59,7 @@ public class Slave implements Worker {
         return arrP;
     }
 
-    public long[] pointsReady(long[] inOut) {
+    public void pointsReady(long[] inOut) {
         try {
             sem.acquire();
             this.arrP = inOut;
