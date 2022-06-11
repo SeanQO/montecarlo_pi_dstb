@@ -55,7 +55,7 @@ public class Client {
 
         } while (!exit);
 
-        long[] data = {points,seed};
+        long[] data = { points, seed };
 
         return data;
     }
@@ -102,7 +102,7 @@ public class Client {
                 if (opt == 1) {
                     exit = true;
                     realExit = false;
-                } else if (opt == 2){
+                } else if (opt == 2) {
                     exit = true;
                     realExit = true;
                 }
@@ -116,7 +116,7 @@ public class Client {
         return realExit;
     }
 
-    public void waitingForManualShutDown(){
+    public void waitingForManualShutDown() {
         System.out.println("*************************");
         System.out.println("Server Logic disconected.");
         System.out.println("Waiting for manual shutdown. --> enter: Ctrl+c");

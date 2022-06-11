@@ -93,6 +93,7 @@ public class GPoints {
         long still = points;
         // while (calcPoints < still) {
         // if (calcPoints != 0) {
+
         // still -= calcPoints;
         // }
         ExecutorService exe = Executors.newFixedThreadPool(10);
