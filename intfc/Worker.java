@@ -17,7 +17,7 @@ package intfc;
 
 public interface Worker extends com.zeroc.Ice.Object
 {
-    long[] resolveTask(long l, com.zeroc.Ice.Current current);
+    long[] resolveTask(long l, long seed, com.zeroc.Ice.Current current);
 
     boolean callback(com.zeroc.Ice.Current current);
 
@@ -57,9 +57,11 @@ public interface Worker extends com.zeroc.Ice.Object
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         com.zeroc.Ice.InputStream istr = inS.startReadParams();
         long iceP_l;
+        long iceP_seed;
         iceP_l = istr.readLong();
+        iceP_seed = istr.readLong();
         inS.endReadParams();
-        long[] ret = obj.resolveTask(iceP_l, current);
+        long[] ret = obj.resolveTask(iceP_l, iceP_seed, current);
         com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
         ostr.writeLongSeq(ret);
         inS.endWriteParams(ostr);

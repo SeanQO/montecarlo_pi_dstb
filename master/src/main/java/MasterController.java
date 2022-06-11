@@ -35,7 +35,7 @@ public class MasterController implements Runnable{
 	public void run() {
 		//do while dots = max dots
 		// Current c = new Current();
-		long[] inOut = manager.getWorker().resolveTask(maxDot);
+		long[] inOut = manager.getWorker().resolveTask(maxDot,seed);
 		// System.out.println("Puntos :" + inOut[0] + " " +inOut[1]);
 		// main.setIn(inOut[0]);
 		// main.setOut(inOut[1]);
@@ -48,7 +48,7 @@ public class MasterController implements Runnable{
 
 	public long[] taskResolver(WorkerPrx workerPrx, Current current, Long l){
 
-		return workerPrx.resolveTask(l);
+		return workerPrx.resolveTask(l,seed);
 	}
 
 	private double getRand() {

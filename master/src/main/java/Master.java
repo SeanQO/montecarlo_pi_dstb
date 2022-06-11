@@ -24,9 +24,11 @@ public class Master {
                     c.waitingForNewWorkers(wm.getNumOfWorkers());
                 }
                 
-                long points = c.menu();
-
-                thread = new GPoints(points, wm);
+                long[] data = c.menu();
+                long points = data[0];
+                long seed = data[1];
+                
+                thread = new GPoints(points, wm,seed);
                 thread.getInOut();
                 exit = c.shoulExit();
                 reRun = !exit;

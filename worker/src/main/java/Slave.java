@@ -7,9 +7,8 @@ import intfc.Worker;
 public class Slave implements Worker{     
 	
 	boolean working;
-	
+	Random rd;
 	public Slave() {
-		
 		working = false;
 	}
 //    @Override  
@@ -26,12 +25,16 @@ public class Slave implements Worker{
 
     // get random value
 	private double getRand() {
-		Random rd = new Random();
 		return rd.nextDouble();
 	}
 
+    private void initRand(Long seed){
+		this.rd = new Random();
+        this.rd.setSeed(seed);
+    }
+
   //calculate random points
-	public long[] taskResolver(long l) {
+	public long[] taskResolver(long l, Long seed) {
         int in = 0;
         int out = 0;
         working = true;
@@ -65,9 +68,10 @@ public class Slave implements Worker{
 		}
 	}
 
-  @Override
-    public long[] resolveTask(long l, Current current) {
-       
+    @Override
+    public long[] resolveTask(long l, long seed, Current current) {
+        this.initRand(seed);
+        
         int in = 0;
         int out = 0;
         working = true;

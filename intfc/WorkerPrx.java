@@ -17,38 +17,40 @@ package intfc;
 
 public interface WorkerPrx extends com.zeroc.Ice.ObjectPrx
 {
-    default long[] resolveTask(long l)
+    default long[] resolveTask(long l, long seed)
     {
-        return resolveTask(l, com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return resolveTask(l, seed, com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default long[] resolveTask(long l, java.util.Map<String, String> context)
+    default long[] resolveTask(long l, long seed, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(l, context, true).waitForResponse();
+        return _iceI_resolveTaskAsync(l, seed, context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l)
+    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l, long seed)
     {
-        return _iceI_resolveTaskAsync(l, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+        return _iceI_resolveTaskAsync(l, seed, com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l, java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<long[]> resolveTaskAsync(long l, long seed, java.util.Map<String, String> context)
     {
-        return _iceI_resolveTaskAsync(l, context, false);
+        return _iceI_resolveTaskAsync(l, seed, context, false);
     }
 
     /**
      * @hidden
      * @param iceP_l -
+     * @param iceP_seed -
      * @param context -
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_resolveTaskAsync(long iceP_l, java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<long[]> _iceI_resolveTaskAsync(long iceP_l, long iceP_seed, java.util.Map<String, String> context, boolean sync)
     {
         com.zeroc.IceInternal.OutgoingAsync<long[]> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "resolveTask", null, sync, null);
         f.invoke(true, context, null, ostr -> {
                      ostr.writeLong(iceP_l);
+                     ostr.writeLong(iceP_seed);
                  }, istr -> {
                      long[] ret;
                      ret = istr.readLongSeq();

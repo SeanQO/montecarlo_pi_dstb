@@ -5,6 +5,7 @@ public class Client {
     private long points;
     private InputStreamReader r;
     private BufferedReader br;
+    private long seed;
 
     public Client() {
         r = new InputStreamReader(System.in);
@@ -30,7 +31,7 @@ public class Client {
         System.out.println(" ");
     }
 
-    public long menu() {
+    public long[] menu() {
         boolean exit = false;
         do {
             try {
@@ -41,6 +42,10 @@ public class Client {
                 System.out.println(" ");
                 this.points = Long.valueOf(br.readLine());
                 System.out.println("*************************");
+                System.out.println("Enter random seed:");
+                System.out.println(" ");
+                this.seed = Long.valueOf(br.readLine());
+                System.out.println("*************************");
                 System.out.println(" ");
                 exit = true;
             } catch (Exception e) {
@@ -50,7 +55,9 @@ public class Client {
 
         } while (!exit);
 
-        return this.points;
+        long[] data = {points,seed};
+
+        return data;
     }
 
     public void waitingForWorkers() {

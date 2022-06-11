@@ -20,13 +20,14 @@ public class GPoints {
     //Max dots to randomize
     private final static long TASK = 10000000;
     //Seed to random
-    private long seed = 1;
+    private long seed;
     private WorkerManager wm;
     private Semaphore sem=new Semaphore(1);
     
-    public GPoints(long p, WorkerManager wm){
+    public GPoints(long p, WorkerManager wm, long seed){
         this.points = p;
         this.wm = wm;
+        this.seed = seed;
     }
 
     public BigDecimal calcPi() {  
