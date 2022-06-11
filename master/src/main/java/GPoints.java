@@ -95,7 +95,7 @@ public class GPoints {
         // if (calcPoints != 0) {
         // still -= calcPoints;
         // }
-        ExecutorService exe = Executors.newFixedThreadPool(8);
+        ExecutorService exe = Executors.newFixedThreadPool(10);
         while (still > 0) {
             long la = TASK;
             if (still < TASK) {
