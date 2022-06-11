@@ -1,0 +1,15 @@
+<state>
+  <timestamp value='1654951370878' />
+  <sourceSet name='default'>
+    <source name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\Intfcs.ice'>
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\Worker.java' />
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\Server.java' />
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\WorkerPrx.java' />
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\_WorkerPrxI.java' />
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\ServerPrx.java' />
+      <file name='E:\Desktop\u\7mo\Arqui_Soft\pi\montecarlo_pi_distributed\worker\build\generated-src\intfc\_ServerPrxI.java' />
+    </source>
+    <arg value='D:\ice\\bin\slice2java.exe' />
+    <arg value='-ID:\ice\\slice' />
+  </sourceSet>
+</state>

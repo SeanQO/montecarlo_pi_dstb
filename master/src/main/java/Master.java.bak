@@ -27,9 +27,10 @@ public class Master {
                 long[] data = c.menu();
                 long points = data[0];
                 long seed = data[1];
+                
+				long time1 = System.currentTimeMilis();
 				
                 thread = new GPoints(points, wm,seed);
-				long time1 = System.currentTimeMilis();
                 thread.getInOut();
 				long time2 = System.currentTimeMilis();
 				System.out.println("Time taked" + (time2-time1));
