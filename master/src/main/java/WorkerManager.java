@@ -68,7 +68,9 @@ return w;
 	}
 
 
-
+	public int getNumOfWorkers(){
+		return workers.size();
+	}
 
 
     
