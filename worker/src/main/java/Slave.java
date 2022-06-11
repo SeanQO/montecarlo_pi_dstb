@@ -65,22 +65,23 @@ public class Slave implements Worker{
 		}
 	}
 
-    @Override
+  @Override
     public long[] resolveTask(long l, Current current) {
+       
         int in = 0;
         int out = 0;
         working = true;
-        System.out.println("Working");
+       
         for (long i = 0; i < l; i++) {
-        	
+        
             double x = this.getRand();
             double y = this.getRand();
             if (x * x + y * y <= 1) {
                 // point is inside the circle
-                in = in++;
+                in++;
             } else {
                 // point is outside the circle
-                out = out++;
+                out++;
             }
         }
         
