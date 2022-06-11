@@ -1,97 +1,63 @@
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.zeroc.Ice.Current;
 
 import intfc.Worker;
 
-public class Slave implements Worker{     
-	
-	boolean working;
-	Random rd;
-	public Slave() {
-		working = false;
-	}
-//    @Override  
-//    public void run() {  
-//        while(true) {  
-//            //Getting subtasks  
-//            Task input = workQueue.poll(); 
-//            if(input == null) break;
-//            input = update(input);
-//            //Write the processing results to the result set  
-//            //resultMap.put(Integer.toString(input.hashCode()));  
-//        }  
-//    } 
+public class Slave implements Worker {
 
-    // get random value
-	private double getRand() {
-		return rd.nextDouble();
-	}
+    boolean working;
+    long[] arrP;
 
-    private void initRand(Long seed){
-		this.rd = new Random();
-        this.rd.setSeed(seed);
-    }
-
-  //calculate random points
-	public long[] taskResolver(long l, Long seed) {
-        int in = 0;
-        int out = 0;
-        working = true;
-
-        for (long i = 0; i < l; i++) {
-        	
-            double x = this.getRand();
-            double y = this.getRand();
-            if (x * x + y * y <= 1) {
-                // point is inside the circle
-                in = in++;
-            } else {
-                // point is outside the circle
-                out = out++;
-            }
-        }
-        
-        long[] inOut = {in, out};
+    public Slave() {
         working = false;
-        return inOut;
-	}
+    }
+    // @Override
+    // public void run() {
+    // while(true) {
+    // //Getting subtasks
+    // Task input = workQueue.poll();
+    // if(input == null) break;
+    // input = update(input);
+    // //Write the processing results to the result set
+    // //resultMap.put(Integer.toString(input.hashCode()));
+    // }
+    // }
 
-	@Override
-	public boolean callback(Current current) {
-		if(working == false) {
-			System.out.println("Slave ready");
-			return true;
-		}else {
-			
-			return false;
-		}
-	}
+    @Override
+    public boolean callback(Current current) {
+        if (working == false) {
+            System.out.println("Slave ready");
+            return true;
+        } else {
+
+            return false;
+        }
+    }
 
     @Override
     public long[] resolveTask(long l, long seed, Current current) {
-        this.initRand(seed);
-        
-        int in = 0;
-        int out = 0;
-        working = true;
-       
-        for (long i = 0; i < l; i++) {
-        
-            double x = this.getRand();
-            double y = this.getRand();
-            if (x * x + y * y <= 1) {
-                // point is inside the circle
-                in++;
-            } else {
-                // point is outside the circle
-                out++;
-            }
+        long still = l;
+        ExecutorService exe = Executors.newFixedThreadPool(10);
+
+        while (still > 0) {
+            exe.execute(new TPoints(this, l, seed));
+            seed++;
+            long task = arrP[0] + arrP[1];
+            still -= task;
         }
-        
-        long[] inOut = {in, out};
-        working = false;
-        return inOut;
+
+        exe.shutdown();
+        while (!exe.isTerminated())
+            ;
+
+        return arrP;
     }
 
-}  
+    public long[] pointsReady(long[] inOut) {
+        this.arrP = inOut;
+    }
+
+}
