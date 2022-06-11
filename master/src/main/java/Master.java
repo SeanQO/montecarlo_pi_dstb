@@ -7,7 +7,7 @@ public class Master {
         boolean exit = false;
         c = new Client();
         c.welcome();
-        boolean reRun = false; 
+        boolean reRun = false;
         try (com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args, "master.config")) {
 
             Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
@@ -16,20 +16,22 @@ public class Master {
             WorkerManager wm = new WorkerManager();
             adapter.add(wm, com.zeroc.Ice.Util.stringToIdentity("server"));
             adapter.activate();
-           
+
             do {
-                if(!reRun){
+                if (!reRun) {
                     c.waitingForWorkers();
-                }else{
+                } else {
                     c.waitingForNewWorkers(wm.getNumOfWorkers());
                 }
-                
+
                 long[] data = c.menu();
                 long points = data[0];
                 long seed = data[1];
-                
-                thread = new GPoints(points, wm,seed);
+                long time1 = System.currentTimeMillis();
+                thread = new GPoints(points, wm, seed);
                 thread.getInOut();
+                long time2 = System.currentTimeMillis();
+                System.out.println("Time taked: " + (time2 - time1));
                 exit = c.shoulExit();
                 reRun = !exit;
             } while (!exit);

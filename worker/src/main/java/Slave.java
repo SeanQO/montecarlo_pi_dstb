@@ -42,11 +42,10 @@ public class Slave implements Worker {
     @Override
     public long[] resolveTask(long l, long seed, Current current) {
         long still = l;
-        ExecutorService exe = Executors.newFixedThreadPool(10);
+        ExecutorService exe = Executors.newFixedThreadPool(8);
 
         while (still > 0) {
             exe.execute(new TPoints(this, l, seed));
-            System.out.println("------");
             seed++;
             long task = arrP[0] + arrP[1];
             still -= task;
