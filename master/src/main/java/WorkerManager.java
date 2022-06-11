@@ -22,16 +22,22 @@ public class WorkerManager implements Server{
 
 	
     public WorkerPrx getWorker() {
-    	WorkerPrx w;
-    	
+    	WorkerPrx w = null;
+	boolean nuai = true;    	
+
+	while(nuai){
     	if(workers.isEmpty()) {
-    		w =  null;
+		
+    			break;
     	}else {
-    		w = workers.poll();
+				
+		w = workers.poll();
     		workers.add(w);
+nuai = false;  		
+return w;
     	}
-    	
-    	return w;
+    	}
+	return w;    	
     	
     }
 
@@ -44,8 +50,9 @@ public class WorkerManager implements Server{
 
 	@Override
 	public void attach(WorkerPrx workerprx, Current current) {
-			this.workers.add((WorkerPrx) workerprx);	
-			System.out.println("Worker Online");		
+			this.workers.add((WorkerPrx) workerprx);
+				
+			System.out.println("Worker Online"+workers.size());		
 		
 	}
 

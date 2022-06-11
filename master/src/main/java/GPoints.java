@@ -1,6 +1,7 @@
 import java.math.BigDecimal;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.math.RoundingMode;
 
 public class GPoints {
@@ -20,9 +21,12 @@ public class GPoints {
     private final static long TASK = 10000000;
     //Seed to random
     private long seed = 1;
+    private WorkerManager wm;
+    private Semaphore sem=new Semaphore(1);
     
-    public GPoints(long p){
+    public GPoints(long p, WorkerManager wm){
         this.points = p;
+        this.wm = wm;
     }
 
     public BigDecimal calcPi() {  
@@ -32,15 +36,28 @@ public class GPoints {
     }  
 
     public void pointsReady(long[] inOut){
-        this.in += inOut[0];
-        this.out += inOut[1];
+        try {
+            sem.acquire();
+            //System.out.println(getIn()  + " --- " + getOut());
 
-        long currentPoints = getIn() + getOut();
+            //System.out.println("antes if" + inOut[0] +" "+inOut[1]);
+            this.in += inOut[0];
+            this.out += inOut[1];
+            //System.out.println(getIn()  + " --- " + getOut());
 
-        if (currentPoints == this.points) {
-            this.piCalc = calcPi();
-            print();
+            long currentPoints = getIn() + getOut();
+           // System.out.println("cu"+ currentPoints);
+
+            if (currentPoints == this.points) {
+                System.out.println("en if");
+                this.piCalc = calcPi();
+                print();
+            }
+            sem.release();
+        } catch (Exception e) {
+            //TODO: handle exception
         }
+
     }
 
 
@@ -73,19 +90,24 @@ public class GPoints {
 	}
 
     public void getInOut(){
-        while (calcPoints < points) {
-            long still = 20;
-            if (calcPoints != 0) {
-                still -= calcPoints;
-            }
+	
+        long still = points;
+        // while (calcPoints < still) {
+            // if (calcPoints != 0) {
+            //     still -= calcPoints;
+            // }
             ExecutorService exe = Executors.newFixedThreadPool(10);
             while (still > 0) {
-                exe.execute(new MasterController(TASK, this, seed));
+                long la=TASK;
+                if(still<TASK){
+                    la=still;
+                }
+                exe.execute(new MasterController(la, this, seed, wm));
                 seed++;
                 still -= TASK;
             }
             exe.shutdown();
             while (!exe.isTerminated());
-        }
+        // }
     }
 }

@@ -17,11 +17,12 @@ public class MasterController implements Runnable{
 
 	private Random r;
 
-	public MasterController(Long maxDot, GPoints main, long seed) {
+	public MasterController(Long maxDot, GPoints main, long seed, WorkerManager wm) {
 		this.main = main;
 		this.maxDot = maxDot;
 		this.seed = seed;
 		this.r = new Random(this.seed);
+		this.manager = wm;
     }
 
 	public MasterController(Long maxDot, GPoints main) {
@@ -33,10 +34,15 @@ public class MasterController implements Runnable{
     @Override
 	public void run() {
 		//do while dots = max dots
-		Current c = new Current();
-		long[] inOut = taskResolver(manager.getWorker(), c, maxDot);
-		main.setIn(inOut[0]);
-		main.setOut(inOut[1]);
+		// Current c = new Current();
+		long[] inOut = manager.getWorker().resolveTask(maxDot);
+		// System.out.println("Puntos :" + inOut[0] + " " +inOut[1]);
+		// main.setIn(inOut[0]);
+		// main.setOut(inOut[1]);
+		//System.out.println("PUntos :" + inOut[0] + " " +inOut[1]);
+		main.pointsReady(inOut);
+
+		
 
 	}
 

@@ -12,14 +12,15 @@ public class Master {
             Runtime.getRuntime().addShutdownHook(new Thread(() -> communicator.destroy()));
 
             com.zeroc.Ice.ObjectAdapter adapter = communicator.createObjectAdapter("Callback.Server");
-            adapter.add(new WorkerManager(), com.zeroc.Ice.Util.stringToIdentity("server"));
+            WorkerManager wm =  new WorkerManager();
+            adapter.add(wm, com.zeroc.Ice.Util.stringToIdentity("server"));
             adapter.activate();
 
             c = new Client();
             long points = c.menu();
             System.out.println("ENTERED POINTS --> " + points);
-
-            thread = new GPoints(points);
+		
+            thread = new GPoints(points, wm);
             thread.getInOut();
 
             communicator.waitForShutdown();
