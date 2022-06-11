@@ -10,7 +10,7 @@ import intfc.Worker;
 public class Slave implements Worker {
 
     boolean working;
-    long[] arrP;
+    long[] arrP = new long[] { 0, 0 };
     private Semaphore sem = new Semaphore(1);
 
     public Slave() {
